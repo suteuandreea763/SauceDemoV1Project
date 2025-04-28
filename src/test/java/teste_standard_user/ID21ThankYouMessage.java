@@ -1,17 +1,32 @@
 package teste_standard_user;
 
-import helpMethods.AlertHelper;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
+import java.util.Map;
 
 public class ID21ThankYouMessage {
     @Test
     public void verifyThankYouMessage() {
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.addArguments("--disable-save-password-bubble");
+        options.addArguments("--incognito");
+        options.addArguments("--enable-automation");
+        options.addArguments("--disable-extensions");
+        options.setExperimentalOption("prefs", Map.of(
+                "credentials_enable_service", false,
+                "profile.password_manager_enabled", false,
+                "profile.default_content_setting_values.notifications", 2
+        ));
+
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
 
@@ -21,17 +36,28 @@ public class ID21ThankYouMessage {
         driver.findElement(By.id("password")).sendKeys("secret_sauce");
         driver.findElement(By.id("login-button")).click();
 
-        driver.findElement(By.cssSelector("button#add-to-cart-sauce-labs-backpack")).click();
-        driver.findElement(By.id("shopping_cart_container")).click();
+        new Actions(driver).sendKeys(Keys.ESCAPE).perform();
 
-        WebElement checkoutButton = driver.findElement(By.cssSelector(".btn_action.checkout_button"));
+        driver.findElement(By.tagName("body")).click();
+
+        WebElement addToCart = driver.findElement(By.cssSelector("button#add-to-cart-sauce-labs-backpack"));
+        executor.executeScript("arguments[0].click();", addToCart);
+
+        WebElement cartElement = driver.findElement(By.className("shopping_cart_link"));
+        executor.executeScript("arguments[0].click();", cartElement);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement checkoutButton = wait.until(ExpectedConditions.elementToBeClickable(By.className("checkout_button")));
         executor.executeScript("arguments[0].click();", checkoutButton);
 
-        driver.findElement(By.className("form_input")).sendKeys("Andreea");
+
+        driver.findElement(By.id("first-name")).sendKeys("Andreea");
         driver.findElement(By.id("last-name")).sendKeys("User");
         driver.findElement(By.id("postal-code")).sendKeys("12345");
+
         driver.findElement(By.id("continue")).click();
-        driver.findElement(By.id("finish")).click();
+        WebElement finishButton = driver.findElement(By.id("finish"));
+        executor.executeScript("arguments[0].click();", finishButton);
 
         WebElement thankYouMessage = driver.findElement(By.className("complete-header"));
         String message = thankYouMessage.getText();
@@ -44,4 +70,6 @@ public class ID21ThankYouMessage {
         driver.quit();
     }
 }
+
+
 

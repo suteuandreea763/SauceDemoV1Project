@@ -13,7 +13,7 @@ public class ID15ProtectedPagesAccessAfterLogout {
     @Test
     public void verifyCannotAccessProtectedPagesAfterLogout() {
         driver = new ChromeDriver();
-        driver.get("https://www.saucedemo.com/v1/");
+        driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 
         JavascriptExecutor executor = (JavascriptExecutor) driver;
@@ -27,7 +27,7 @@ public class ID15ProtectedPagesAccessAfterLogout {
         WebElement loginButton = driver.findElement(By.id("login-button"));
         loginButton.click();
 
-        driver.get("https://www.saucedemo.com/v1/inventory.html");
+        driver.get("https://www.saucedemo.com/inventory.html");
 
         WebElement menuButton = driver.findElement(By.xpath("//button[normalize-space()='Open Menu']"));
         menuButton.click();
@@ -35,10 +35,10 @@ public class ID15ProtectedPagesAccessAfterLogout {
         WebElement logoutButton = driver.findElement(By.id("logout_sidebar_link"));
         executor.executeScript("arguments[0].click();", logoutButton);
 
-        driver.get("https://www.saucedemo.com/v1/inventory.html");
+        driver.get("https://www.saucedemo.com/inventory.html");
 
         String currentUrl = driver.getCurrentUrl();
-        if (!currentUrl.contains("https://www.saucedemo.com/v1/")) {
+        if (!currentUrl.contains("https://www.saucedemo.com/")) {
             System.out.println("Test eșuat: Utilizatorul poate accesa pagina protejată după delogare!");
         } else {
             System.out.println("Test trecut: Utilizatorul NU poate accesa pagina protejată după delogare.");

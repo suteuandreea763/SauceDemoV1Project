@@ -1,18 +1,34 @@
 package teste_standard_user;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
+import java.util.Map;
 
 public class ID20TotalAmountDisplay {
     @Test
     public void testCheckoutProcess() {
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.addArguments("--disable-save-password-bubble");
+        options.addArguments("--incognito");
+        options.addArguments("--enable-automation");
+        options.addArguments("--disable-extensions");
+        options.setExperimentalOption("prefs", Map.of(
+                "credentials_enable_service", false,
+                "profile.password_manager_enabled", false,
+                "profile.default_content_setting_values.notifications", 2
+        ));
+
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get("https://www.saucedemo.com/v1/index.html");
+        driver.get("https://www.saucedemo.com/");
 
         JavascriptExecutor executor = (JavascriptExecutor) driver;
 
@@ -20,21 +36,24 @@ public class ID20TotalAmountDisplay {
         driver.findElement(By.id("password")).sendKeys("secret_sauce");
         driver.findElement(By.id("login-button")).click();
 
-        WebElement addToCartButton = driver.findElement(By.xpath
-                ("/html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[3]/div[3]/button[1]"));
-        executor.executeScript("arguments[0].click();", addToCartButton);
+        new Actions(driver).sendKeys(Keys.ESCAPE).perform();
 
-        driver.findElement(By.id("shopping_cart_container")).click();
+        driver.findElement(By.tagName("body")).click();
 
-        WebElement checkoutButton = driver.findElement(By.xpath("//a[@class='btn_action checkout_button']"));
+        WebElement addToCart = driver.findElement(By.id("add-to-cart-sauce-labs-bike-light"));
+        executor.executeScript("arguments[0].click();", addToCart);
+
+        driver.findElement(By.className("shopping_cart_link")).click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement checkoutButton = wait.until(ExpectedConditions.elementToBeClickable(By.className("checkout_button")));
         executor.executeScript("arguments[0].click();", checkoutButton);
 
         driver.findElement(By.id("first-name")).sendKeys("Andreea");
         driver.findElement(By.id("last-name")).sendKeys("User");
         driver.findElement(By.id("postal-code")).sendKeys("12345");
 
-        WebElement continueButton = driver.findElement(By.xpath("//input[@value='CONTINUE']"));
-        executor.executeScript("arguments[0].click();", continueButton);
+        driver.findElement(By.id("continue")).click();
 
         WebElement totalAmountElement = driver.findElement(By.className("summary_total_label"));
         String totalAmount = totalAmountElement.getText();

@@ -17,7 +17,7 @@ public class ID3UsernameValidEmptyPasswordTest {
     public void verifyLoginInvalid() {
 
         driver=new ChromeDriver();
-        driver.get("https://www.saucedemo.com/v1/index.html");
+        driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 
 

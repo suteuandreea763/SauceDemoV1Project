@@ -13,7 +13,7 @@ public class ID16SortProductsByPriceLowToHigh {
     public void verifySortByPriceLowToHigh() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("https://www.saucedemo.com/v1/");
+        driver.get("https://www.saucedemo.com/");
 
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
         driver.findElement(By.id("password")).sendKeys("secret_sauce");

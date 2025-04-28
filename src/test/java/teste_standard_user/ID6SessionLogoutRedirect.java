@@ -14,7 +14,7 @@ public class ID6SessionLogoutRedirect {
     public void LogoutRedirect(){
 
         driver=new ChromeDriver();
-        driver.get("https://www.saucedemo.com/v1/index.html");
+        driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 
         JavascriptExecutor executor = (JavascriptExecutor) driver;
@@ -38,7 +38,7 @@ public class ID6SessionLogoutRedirect {
         executor.executeScript("arguments[0].click();",logoutElement);
 
 
-        if (driver.getCurrentUrl().equals("https://www.saucedemo.com/v1/index.html")) {
+        if (driver.getCurrentUrl().equals("https://www.saucedemo.com/")) {
             System.out.println("Logout successful: The user has been redirected to the login page.");
         } else {
             System.out.println("Logout failed: The user was not redirected to the login page.");

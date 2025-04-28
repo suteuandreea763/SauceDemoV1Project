@@ -17,7 +17,7 @@ public class ID1ValidLoginTest {
     public void verifyLoginValid(){
 
      driver=new ChromeDriver();
-     driver.get("https://www.saucedemo.com/v1/index.html");
+     driver.get("https://www.saucedemo.com/");
      driver.manage().window().maximize();
 
      WebElement usernameElement=driver.findElement(By.id("user-name"));

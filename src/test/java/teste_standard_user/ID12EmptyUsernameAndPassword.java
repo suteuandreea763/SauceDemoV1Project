@@ -18,7 +18,7 @@ public class ID12EmptyUsernameAndPassword {
     public void verifyLoginInvalid() {
 
         driver=new ChromeDriver();
-        driver.get("https://www.saucedemo.com/v1/");
+        driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 
 

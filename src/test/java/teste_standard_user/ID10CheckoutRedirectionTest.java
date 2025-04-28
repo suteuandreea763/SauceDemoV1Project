@@ -71,25 +71,37 @@
 
 package teste_standard_user;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.Map;
 
 public class ID10CheckoutRedirectionTest {
     public WebDriver driver;
 
     @Test
     public void verifyRedirectToCheckout() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.addArguments("--disable-save-password-bubble");
+        options.addArguments("--incognito");
+        options.addArguments("--enable-automation");
+        options.addArguments("--disable-extensions");
+        options.setExperimentalOption("prefs", Map.of(
+                "credentials_enable_service", false,
+                "profile.password_manager_enabled", false,
+                "profile.default_content_setting_values.notifications", 2
+        ));
+
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get("https://www.saucedemo.com/v1/");
+        driver.get("https://www.saucedemo.com/");
 
         JavascriptExecutor executor = (JavascriptExecutor) driver;
 
@@ -102,15 +114,18 @@ public class ID10CheckoutRedirectionTest {
         WebElement loginButton = driver.findElement(By.id("login-button"));
         loginButton.click();
 
-        WebElement addToCartButton = driver.findElement(By.xpath("//div[3]//div[3]//button[1]"));
-        addToCartButton.click();
+        new Actions(driver).sendKeys(Keys.ESCAPE).perform();
+
+        driver.findElement(By.tagName("body")).click();
+
+        WebElement addToCart1 = driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
+        executor.executeScript("arguments[0].click();", addToCart1);
 
         WebElement cartButton = driver.findElement(By.id("shopping_cart_container"));
         cartButton.click();
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement checkoutButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath
-                ("//a[@class='btn_action checkout_button']")));
+        WebElement checkoutButton = wait.until(ExpectedConditions.elementToBeClickable(By.className("checkout_button")));
         executor.executeScript("arguments[0].click();", checkoutButton);
 
         String currentUrl = driver.getCurrentUrl();

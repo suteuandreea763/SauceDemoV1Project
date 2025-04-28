@@ -13,9 +13,8 @@ import org.testng.annotations.Test;
         @Test
         public void verifyPasswordIsMasked() {
 
-            // Inițializarea browserului
             driver = new ChromeDriver();
-            driver.get("https://www.saucedemo.com/v1/");
+            driver.get("https://www.saucedemo.com/");
             driver.manage().window().maximize();
 
             WebElement passwordField = driver.findElement(By.id("password"));

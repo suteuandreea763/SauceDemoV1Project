@@ -18,7 +18,7 @@ public class ID14MainPagesLoadTime {
         @Test
         public void verifyLoginPageLoadTime() {
             long startTime = System.nanoTime();
-            driver.get("https://www.saucedemo.com/v1/");
+            driver.get("https://www.saucedemo.com/");
             long endTime = System.nanoTime();
 
             long loadTimeInSeconds = (endTime - startTime) / 1_000_000_000;
@@ -32,7 +32,7 @@ public class ID14MainPagesLoadTime {
         @Test
         public void verifyProductsPageLoadTime() {
             long startTime = System.nanoTime();
-            driver.get("https://www.saucedemo.com/v1/inventory.html");
+            driver.get("https://www.saucedemo.com/inventory.html");
             long endTime = System.nanoTime();
 
             long loadTimeInSeconds = (endTime - startTime) / 1_000_000_000;
@@ -46,7 +46,7 @@ public class ID14MainPagesLoadTime {
         @Test
         public void verifyCartPageLoadTime() {
             long startTime = System.nanoTime();
-            driver.get("https://www.saucedemo.com/v1/cart.html");
+            driver.get("https://www.saucedemo.com/cart.html");
             long endTime = System.nanoTime();
 
             long loadTimeInSeconds = (endTime - startTime) / 1_000_000_000;

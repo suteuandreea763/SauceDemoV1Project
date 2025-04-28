@@ -16,7 +16,7 @@ public class ID8CartItemAdder {
     public void AddToCart() {
 
         driver = new ChromeDriver();
-        driver.get("https://www.saucedemo.com/v1/index.html");
+        driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 
         JavascriptExecutor executor = (JavascriptExecutor) driver;
@@ -32,30 +32,23 @@ public class ID8CartItemAdder {
         WebElement loginButtonElement=driver.findElement(By.id("login-button"));
         loginButtonElement.click();
 
-        WebElement addToCart1=driver.findElement(By.xpath
-                ("//div[@class='inventory_list']//div[1]//div[3]//button[1]"));
-        executor.executeScript("arguments[0].click();",addToCart1);
+        WebElement addToCart1 = driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
+        executor.executeScript("arguments[0].click();", addToCart1);
 
-        WebElement addToCart2=driver.findElement(By.xpath
-                ("//div[5]//div[3]//button[1]"));
-        executor.executeScript("arguments[0].click();",addToCart2);
+        WebElement addToCart2 = driver.findElement(By.id("add-to-cart-sauce-labs-bike-light"));
+        executor.executeScript("arguments[0].click();", addToCart2);
 
-        WebElement addToCart3=driver.findElement(By.xpath
-                ("//body//div[@id='page_wrapper']//div[@id='inventory_container']" +
-                        "//div[@id='inventory_container']//div[2]//div[3]//button[1]"));
-        executor.executeScript("arguments[0].click();",addToCart3);
+        WebElement addToCart3 = driver.findElement(By.id("add-to-cart-sauce-labs-bolt-t-shirt"));
+        executor.executeScript("arguments[0].click();", addToCart3);
 
-        WebElement addToCart4=driver.findElement(By.xpath
-                ("//div[3]//div[3]//button[1]"));
-        executor.executeScript("arguments[0].click();",addToCart4);
+        WebElement addToCart4 = driver.findElement(By.id("add-to-cart-sauce-labs-fleece-jacket"));
+        executor.executeScript("arguments[0].click();", addToCart4);
 
-        WebElement addToCart5=driver.findElement(By.xpath
-                ("//div[4]//div[3]//button[1]"));
-        executor.executeScript("arguments[0].click();",addToCart5);
+        WebElement addToCart5 = driver.findElement(By.id("add-to-cart-sauce-labs-onesie"));
+        executor.executeScript("arguments[0].click();", addToCart5);
 
-        WebElement addToCart6=driver.findElement(By.xpath
-                ("//div[6]//div[3]//button[1]"));
-        executor.executeScript("arguments[0].click();",addToCart6);
+        WebElement addToCart6 = driver.findElement(By.id("add-to-cart-test.allthethings()-t-shirt-(red)"));
+        executor.executeScript("arguments[0].click();", addToCart6);
 
 
         WebElement cartBadge = driver.findElement(By.className("shopping_cart_container"));

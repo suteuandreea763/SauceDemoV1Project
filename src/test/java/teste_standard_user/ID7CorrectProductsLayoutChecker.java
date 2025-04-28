@@ -15,7 +15,7 @@ public class ID7CorrectProductsLayoutChecker {
     public void ProductList() {
 
         driver = new ChromeDriver();
-        driver.get("https://www.saucedemo.com/v1/index.html");
+        driver.get("https://www.saucedemo.com/");
         driver.manage().window().maximize();
 
         WebElement usernameElement=driver.findElement(By.id("user-name"));
